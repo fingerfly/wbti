@@ -7,6 +7,7 @@ import {
   bumpSemverString,
   normalizeRemoteRepo,
   parseSemver,
+  shouldDeployExclude,
 } from '../../scripts/deployLib.js';
 
 describe('normalizeRemoteRepo', () => {
@@ -44,5 +45,14 @@ describe('parseSemver / bumpSemverString', () => {
 
   it('parseSemver rejects invalid', () => {
     expect(parseSemver('1.2')).toBeNull();
+  });
+});
+
+describe('shouldDeployExclude', () => {
+  it('excludes internal-only metadata from public mirror', () => {
+    expect(shouldDeployExclude('.cursor')).toBe(true);
+    expect(shouldDeployExclude('AGENTS.md')).toBe(true);
+    expect(shouldDeployExclude('.env.deploy')).toBe(true);
+    expect(shouldDeployExclude('README.md')).toBe(false);
   });
 });

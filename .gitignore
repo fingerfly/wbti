@@ -1,8 +1,6 @@
 node_modules/
 playwright-report/
 test-results/
-.cursor/
-AGENTS.md
 .env.deploy
 .DS_Store
 *.log

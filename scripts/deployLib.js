@@ -22,6 +22,7 @@ export const DEPLOY_EXCLUDE = new Set([
   'playwright-report',
   'test-results',
   '.cursor',
+  'AGENTS.md',
 ]);
 
 /**

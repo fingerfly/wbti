@@ -29,9 +29,12 @@
   use generic placeholders for deploy repo and Pages URL.
 - Deploy hardening: `scripts/deployGitOps.js` no longer passes `--no-verify`
   to `git commit`; local hooks remain active.
-- Internal planning metadata is now kept local (`.cursor/` ignored from git).
+- Internal planning metadata is kept private and excluded from public mirror
+  artifacts.
 - `AGENTS.md` is treated as internal-only guidance and excluded from the public
   repository surface.
+- Private monorepo tracking for `.cursor/plans/*` and `AGENTS.md` is preserved;
+  public leak prevention is enforced by deploy mirror exclusions.
 - Public README no longer links internal `.cursor/plans/*` artifacts.
 
 ## 0.2.2 — 2026-04-13
