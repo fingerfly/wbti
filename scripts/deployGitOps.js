@@ -54,6 +54,9 @@ export function ensureDeployCheckout(deployDir, remoteUrl, expectedRepo) {
       const cur = gitOutput(['remote', 'get-url', 'origin'], deployDir);
       if (normalizeRemoteRepo(cur) === expectedRepo) {
         reuse = true;
+        if (cur.trim() !== remoteUrl.trim()) {
+          gitLive(['remote', 'set-url', 'origin', remoteUrl], deployDir);
+        }
         gitLive(['pull', '--ff-only', 'origin', 'main'], deployDir);
       }
     } catch {
