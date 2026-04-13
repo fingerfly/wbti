@@ -23,7 +23,7 @@
 
 ### Changed
 
-- **许可对齐**：新增仓库根 `LICENSE`（MIT），`package.json` `license` 同步为 `MIT`。
+- **许可声明**：项目许可证设为 `UNLICENSED`（No License）。
 - **Pages 验证**：`https://fingerfly.github.io/wbti/` 已可访问，Actions `Deploy to GitHub Pages` 成功。
 - **quizView 拆分**：`quizViewQuestion` / `quizViewResult` / `quizViewScreens` /
   `quizViewOptions` / `quizViewComplete`；配套单元测。

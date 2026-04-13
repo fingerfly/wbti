@@ -20,7 +20,7 @@
     "wbti",
     "workplace"
   ],
-  "license": "MIT",
+  "license": "UNLICENSED",
   "devDependencies": {
     "@playwright/test": "^1.49.1",
     "http-server": "^14.1.1",

@@ -46,7 +46,7 @@ shell 脚本做 subtree；跨平台只依赖 **Node + git**。
 
 ## D. 可选
 
-9. [ ] 自定义域名、分支保护（可选）；`LICENSE` 与 `package.json` 已对齐为 MIT。
+9. [ ] 自定义域名、分支保护（可选）；许可证当前为 `UNLICENSED`（No License）。
 
 ## 风险摘要
 

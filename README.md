@@ -116,6 +116,6 @@ path and the same `npm ci` / test commands.
 
 ## License
 
-`MIT`（见仓库根 [LICENSE](LICENSE)）。
+`UNLICENSED`（No License）。
 
 
