@@ -2,6 +2,31 @@
 
 ## Unreleased
 
+## 0.2.6 — 2026-04-13
+
+### Changed
+
+- 题库文案轻量化（`data/canonical-questions.json`）：16 道母题题干与全部选项
+  改为更短、更口语、低阅读负担表达；保留 `id` / `optionId` / `scores` 不变，
+  运行时 320 组合题自动继承新文案。
+- 结果页文案轻量化（`data/result-catalog.json`）：8 种结果的 `title`、
+  `gameSubtitle` 与四段 `reportSections` 全量改写为更通俗、轻松的语气，减少
+  过密梗词与过时表达。
+- 首页文案收敛（`index.html`）：`meta description` 与欢迎区导语简化，降低信息
+  压力，和题库/结果页语气统一。
+
+### Fixed
+
+- 发布镜像远端切换修复（`scripts/deployGitOps.js`）：复用已有 deploy checkout
+  时，若当前 `origin` URL 与 `WBTI_DEPLOY_REMOTE` 不一致，自动执行
+  `git remote set-url origin <remote>` 后再拉取/推送，避免旧 HTTPS 远端导致的
+  token 认证失败。
+
+### Tests
+
+- 新增回归测试（`tests/unit/deployGitOps.test.js`）：覆盖“复用目录时自动更新
+  origin URL”的场景，防止发布流程再次卡在错误远端。
+
 ## 0.2.3 — 2026-04-13
 
 ### Added
