@@ -1,0 +1,30 @@
+{
+  "name": "wbti",
+  "version": "0.2.2",
+  "description": "牛马格测验（WBTI）— light workplace humor quiz (entertainment only)",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "vitest run && npm run test:e2e",
+    "test:unit": "vitest run",
+    "test:watch": "vitest watch",
+    "test:e2e": "node -e \"const os=require('node:os'); const path=require('node:path'); const {spawnSync}=require('node:child_process'); const defaultPath=process.platform==='win32'?path.join(os.homedir(),'AppData','Local','ms-playwright'):process.platform==='darwin'?path.join(os.homedir(),'Library','Caches','ms-playwright'):path.join(os.homedir(),'.cache','ms-playwright'); const env={...process.env, PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH || defaultPath}; const cli=path.join(process.cwd(),'node_modules','@playwright','test','cli.js'); const r=spawnSync(process.execPath,[cli,'test'],{stdio:'inherit',env}); process.exit(r.status===null?1:r.status);\"",
+    "deploy": "node scripts/deploy.js",
+    "release:build": "node scripts/deploy.js build --confirm",
+    "release:patch": "node scripts/deploy.js patch --confirm",
+    "release:minor": "node scripts/deploy.js minor --confirm",
+    "release:major": "node scripts/deploy.js major --confirm"
+  },
+  "keywords": [
+    "quiz",
+    "wbti",
+    "workplace"
+  ],
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "http-server": "^14.1.1",
+    "jsdom": "^25.0.1",
+    "vitest": "^3.0.5"
+  }
+}

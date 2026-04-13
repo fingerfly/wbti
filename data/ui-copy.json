@@ -1,0 +1,14 @@
+{
+  "progressLine": {
+    "template": "第 {current} / {total} 题 · 班味浓度约 {pct}% · 离收工还有 {rest} 题"
+  },
+  "share": {
+    "resultHeaderPrefix": "我的牛马格：",
+    "compareBlurbTemplate": "我是「{title}」格，你呢？来测：{url}",
+    "disclaimerLines": [
+      "【重要】仅供娱乐与自嘲。",
+      "不用于招聘/选拔/晋升决策，亦不构成心理或医学诊断。",
+      "（娱乐向小测，非心理测评）"
+    ]
+  }
+}

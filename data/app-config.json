@@ -1,0 +1,17 @@
+{
+  "sessionSize": 16,
+  "variantsPerPattern": 20,
+  "showVariantSceneDefault": false,
+  "showOptionQuipDefault": false,
+  "tieSignByAxis": {
+    "a": 1,
+    "b": -1,
+    "c": 1
+  },
+  "achievements": {
+    "storageKey": "wbti.achievements.v1",
+    "speedRunnerThresholdMs": 200,
+    "nightOwlFromHour": 23,
+    "nightOwlToHourInclusive": 6
+  }
+}
