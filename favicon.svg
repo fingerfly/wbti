@@ -1,0 +1,67 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="512"
+  height="512"
+  viewBox="0 0 512 512"
+  role="img"
+  aria-labelledby="title desc"
+>
+  <title id="title">WBTI playful personality test icon</title>
+  <desc id="desc">Colorful speech bubble with WBTI and witty face</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6D39FF" />
+      <stop offset="52%" stop-color="#FF5EA8" />
+      <stop offset="100%" stop-color="#FF9A3D" />
+    </linearGradient>
+  </defs>
+  <rect x="32" y="32" width="448" height="448" rx="108" fill="url(#bg)" />
+
+  <g transform="translate(72 92)">
+    <path
+      d="M34 36h300c18 0 32 14 32 32v150c0 18-14 32-32 32H184l-50 62
+      4-62H34c-18 0-32-14-32-32V68c0-18 14-32 32-32z"
+      fill="#ffffff"
+      fill-opacity="0.95"
+    />
+    <text
+      x="184"
+      y="146"
+      text-anchor="middle"
+      fill="#3A1DBD"
+      font-size="74"
+      font-family="Inter, Arial, sans-serif"
+      font-weight="800"
+      letter-spacing="2"
+    >
+      WBTI
+    </text>
+
+    <circle cx="82" cy="88" r="12" fill="#3A1DBD" />
+    <path
+      d="M126 88l24-14"
+      stroke="#3A1DBD"
+      stroke-width="8"
+      stroke-linecap="round"
+    />
+    <path
+      d="M72 184c16 22 44 32 72 32s56-10 72-32"
+      stroke="#3A1DBD"
+      stroke-width="12"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <circle cx="294" cy="204" r="20" fill="#FFD94F" />
+    <text
+      x="294"
+      y="213"
+      text-anchor="middle"
+      fill="#603A00"
+      font-size="26"
+      font-family="Inter, Arial, sans-serif"
+      font-weight="700"
+    >
+      ?
+    </text>
+  </g>
+</svg>
