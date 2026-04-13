@@ -2,32 +2,31 @@
 
 ## Unreleased
 
+（暂无）
+
+## 0.2.2 — 2026-04-13
+
 ### Added
 
-- **`.env.deploy`**：可选本地文件加载 `WBTI_DEPLOY_REMOTE` 等（见
+- **公开仓库**：[fingerfly/wbti](https://github.com/fingerfly/wbti) 首次通过
+  `npm run release:patch` 推送至 `main`。
+- **线上演示（GitHub Pages）**：启用 Actions Pages 后一般为  
+  **https://fingerfly.github.io/wbti/**
+- **`.env.deploy`**：可选本地加载 `WBTI_DEPLOY_REMOTE`（见
   [deploy.env.example](deploy.env.example)）；[`scripts/deployEnv.js`](scripts/deployEnv.js)。
 - **跨平台发布（Goja/HLM 式）**：[`scripts/deploy.js`](scripts/deploy.js)、
   [`scripts/deployGitOps.js`](scripts/deployGitOps.js)、
   [`scripts/deployLib.js`](scripts/deployLib.js)；`npm run release:build` /
-  `release:patch` / `release:minor` / `release:major`（内置 `--confirm`）。依赖
-  **`WBTI_DEPLOY_REMOTE`**，在 **`wbti/`** 下执行；**不使用** bash/PowerShell 镜像脚本。
-- **GitHub Pages**：`wbti/.github/workflows/deploy-pages.yml`（静态拷贝）+
-  `test.yml`；**`package-lock.json`**（`npm ci` / Actions）。
-- **部署清单** [DEPLOY.md](DEPLOY.md) 重写为 Node 发布流程。
+  `release:patch` / `release:minor` / `release:major`（内置 `--confirm`）。
+- **GitHub Actions**：`deploy-pages.yml` + `test.yml`；**`package-lock.json`**。
+- **部署清单** [DEPLOY.md](DEPLOY.md)（Node 发布流程）。
 
 ### Changed
 
-- **quizView 拆分**：题目区、结果区、翻屏、选项解析与完题流水线分别迁入
-  `quizViewQuestion.js`、`quizViewResult.js`、`quizViewScreens.js`、
-  `quizViewOptions.js`、`quizViewComplete.js`；`quizView.js` 保留编排（SLOC 目标
-  ~100）。新增单元测 `quizViewResult`、`quizViewQuestion`、`quizViewComplete`。
-- **部署策略**：公开库由 **`npm run release:*`** 推送；文档与计划与 Goja/HLM 的 Node
-  发布方式对齐。
-- 欢迎页版式：主内容收入 **welcome-panel** 卡片，增大留白与字号层级；`body` /
-  `main` 用 flex 撑满视口，页脚贴底；眉线「16 题 · 职场情景 · 约 3 分钟」。
-- 欢迎页：去掉顶栏/页脚 **WBTI** 字样；导语改短、接地气，不再提题库/洗牌/SPEC；
-  保留免责声明；移除音效/震动勾选行（仍默认关）。`title` / 分享用文案同步去
-  WBTI（见 `ui-copy.json`、`app.js`）。
+- **quizView 拆分**：`quizViewQuestion` / `quizViewResult` / `quizViewScreens` /
+  `quizViewOptions` / `quizViewComplete`；配套单元测。
+- **部署策略**：公开库由 **`npm run release:*`** 推送（无 bash/PowerShell 镜像脚本）。
+- 欢迎页 **welcome-panel** 版式与文案调整（去 WBTI 品牌字样等，见 `ui-copy.json`）。
 
 ## 0.2.1 — 2026-04-12
 
