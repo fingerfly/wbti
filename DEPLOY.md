@@ -38,18 +38,20 @@ shell 脚本做 subtree；跨平台只依赖 **Node + git**。
 
 ## C. GitHub Pages 与验证
 
-5. [ ] **Settings → Pages → Source** 选 **GitHub Actions**。
-6. [ ] 推送后等待 **Deploy to GitHub Pages** 成功；访问  
-     `https://<user>.github.io/<repo>/`。
-7. [ ] 冒烟：欢迎页 → 16 题 → 结果；`data/*.json`、`profiles/*.png` 均为 200。
-8. [ ] （建议）公开后把**线上 URL** 写入 [CHANGELOG.md](CHANGELOG.md)。
+5. [x] **Settings → Pages → Source** 选 **GitHub Actions**。
+6. [x] 推送后等待 **Deploy to GitHub Pages** 成功；已访问  
+     `https://fingerfly.github.io/wbti/`。
+7. [x] 冒烟：欢迎页可打开；`data/*.json`、`profiles/*.png` 可访问（在线检查）。
+8. [x] 已在 [CHANGELOG.md](CHANGELOG.md) 记录线上 URL。
 
 ## D. 可选
 
-9. [ ] 自定义域名、分支保护、`LICENSE` 与 `package.json` 的 `license` 对齐（若公开）。
+9. [ ] 自定义域名、分支保护（可选）；`LICENSE` 与 `package.json` 已对齐为 MIT。
 
 ## 风险摘要
 
 - 未设置 **`WBTI_DEPLOY_REMOTE`** 时脚本会立即报错退出。
 - 仅改文档时 `deploy-pages` 的 path 过滤可能不触发 → **workflow_dispatch**。
 - 首次 Pages 有时需在 **Environments** 里批准 `github-pages`。
+
+

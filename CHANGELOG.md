@@ -23,6 +23,8 @@
 
 ### Changed
 
+- **许可对齐**：新增仓库根 `LICENSE`（MIT），`package.json` `license` 同步为 `MIT`。
+- **Pages 验证**：`https://fingerfly.github.io/wbti/` 已可访问，Actions `Deploy to GitHub Pages` 成功。
 - **quizView 拆分**：`quizViewQuestion` / `quizViewResult` / `quizViewScreens` /
   `quizViewOptions` / `quizViewComplete`；配套单元测。
 - **部署策略**：公开库由 **`npm run release:*`** 推送（无 bash/PowerShell 镜像脚本）。
@@ -97,17 +99,17 @@
   得分与顺序未改。
 - UI theme: light-on-white (`css/style.css` tokens); `color-scheme: light`.
 - Workspace master plan added under `.cursor/plans/`; scoring child plan links
-  README 牛马格释义.
-- README: document eight「牛马格」roles (axis keys + plain-language blurbs).
+  README 牛马人格释义.
+- README: document eight「牛马人格」roles (axis keys + plain-language blurbs).
 - README + `resultTypes.js`: eight role titles refreshed toward current
   网络人设梗（开麦、脆皮、阴阳师、偷感、淡人、吗喽、NPC 等），报告首段略对齐。
 - Light gamification: result `gameSubtitle` (稀有度/定位/被动), RPG-flavored
   copy, README design note; share/persist include subtitle; result kicker
-  「牛马格掉落」.
+  「牛马人格掉落」.
 
 ### Fixed
 
-- Playwright e2e welcome heading matcher aligned with「测测你的牛马格」copy.
+- Playwright e2e welcome heading matcher aligned with「测测你的牛马人格」copy.
 
 ## 0.1.0 — 2026-04-12
 
@@ -120,3 +122,5 @@
   persistence of last result payload.
 - Project docs: `README.md`, `AGENTS.md`, scoring child plan under
   `.cursor/plans/`, and optional GitHub Actions workflow.
+
+

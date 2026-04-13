@@ -1,9 +1,9 @@
-# 牛马格测试（WBTI）
+# 职场牛马人格测试（WBTI）
 
-**Workplace「牛马格」Type Indicator** — 轻量 **16 题**职场梗测验：一张标签 +
+**Workplace「牛马人格」Type Indicator** — 轻量 **16 题**职场梗测验：一张标签 +
 几段娱乐向短文。**不是**心理测评。
 
-「牛马格」是玩梗说法：自嘲打工情境里的不同应对姿势，并非严肃人格分类。
+「牛马人格」是玩梗说法：自嘲打工情境里的不同应对姿势，并非严肃人格分类。
 
 ## 设计取向：职场梗 × 轻游戏化
 
@@ -11,7 +11,7 @@
 / MOBA 比喻（开团、蓝条、支线、Replay 等），**不是**任何真实游戏的数值或
 IP，也不暗示抽卡概率。截图分享前仍会看到「仅供娱乐」声明。
 
-## 牛马格的八种角色
+## 牛马人格的八种角色
 
 测验根据三条轴的得分符号（`+` / `-`）组合成 **8** 种结果，顺序为 **a → b →
 c**（隐忍↔爆发、内耗↔外耗、躺平↔卷；细则见评分计划）。下面是每种「格」在
@@ -116,6 +116,6 @@ path and the same `npm ci` / test commands.
 
 ## License
 
-`UNLICENSED` (private / default in package.json). **公开**到 GitHub Pages 时，建议将
-`package.json` 的 `license` 与仓库根 **`LICENSE`** 文件对齐（见 [DEPLOY.md](DEPLOY.md)
-一节「D. 可选」）。
+`MIT`（见仓库根 [LICENSE](LICENSE)）。
+
+

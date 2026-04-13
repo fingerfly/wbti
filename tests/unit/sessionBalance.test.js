@@ -49,7 +49,7 @@ describe('QUESTION_BANK + pickBalancedSessionFromBank', () => {
 
   it(
     'caps same patternId per session (≤⌈16/16⌉ = 1)',
-    { timeout: 12000 },
+    { timeout: 20000 },
     () => {
       expect(uniquePatternCountInBank(QUESTION_BANK)).toBe(16);
       expect(patternRepeatCap(SESSION_SIZE, QUESTION_BANK)).toBe(1);

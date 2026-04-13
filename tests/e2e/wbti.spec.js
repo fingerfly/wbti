@@ -5,7 +5,9 @@ import { test, expect } from '@playwright/test';
 
 test('completes quiz and shows result title', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: /测测你的牛马格/ })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: /测测你的.*牛马.*格/ }),
+  ).toBeVisible();
   await page.getByRole('button', { name: '开始测试' }).click();
   for (let i = 0; i < 16; i += 1) {
     await page.locator('.option-btn').first().click();

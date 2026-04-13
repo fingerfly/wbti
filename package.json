@@ -1,7 +1,7 @@
 {
   "name": "wbti",
   "version": "0.2.2",
-  "description": "牛马格测验（WBTI）— light workplace humor quiz (entertainment only)",
+  "description": "牛马人格测验（WBTI）— light workplace humor quiz (entertainment only)",
   "type": "module",
   "private": true,
   "scripts": {
@@ -20,7 +20,7 @@
     "wbti",
     "workplace"
   ],
-  "license": "UNLICENSED",
+  "license": "MIT",
   "devDependencies": {
     "@playwright/test": "^1.49.1",
     "http-server": "^14.1.1",
