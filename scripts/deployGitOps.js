@@ -81,7 +81,7 @@ export function commitAllWithAuthor(deployDir, message) {
   const author = `${name} <${email}>`;
   execFileSync(
     'git',
-    ['commit', '--author', author, '-m', message, '--no-verify'],
+    ['commit', '--author', author, '-m', message],
     {
       cwd: deployDir,
       stdio: 'pipe',

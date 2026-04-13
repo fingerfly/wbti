@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+/**
+ * Purpose: Block unsafe push and require full tests.
+ */
+import { spawnSync } from 'node:child_process';
+
+const r = spawnSync('node', ['scripts/prepushPublicGuard.js'], {
+  stdio: 'inherit',
+  shell: process.platform === 'win32',
+});
+
+process.exit(r.status ?? 1);

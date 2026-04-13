@@ -40,7 +40,7 @@ shell 脚本做 subtree；跨平台只依赖 **Node + git**。
 
 5. [x] **Settings → Pages → Source** 选 **GitHub Actions**。
 6. [x] 推送后等待 **Deploy to GitHub Pages** 成功；已访问  
-     `https://fingerfly.github.io/wbti/`。
+     `https://<owner>.github.io/<repo>/`。
 7. [x] 冒烟：欢迎页可打开；`data/*.json`、`profiles/*.png` 可访问（在线检查）。
 8. [x] 已在 [CHANGELOG.md](CHANGELOG.md) 记录线上 URL。
 

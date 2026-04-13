@@ -60,8 +60,6 @@ import**（`import … with { type: 'json' }`）的浏览器；主题在 `app.js
   showOptionQuip: true })`）。**音效/震动**默认关；欢迎页不再提供开关（`fxSettings`
   仍读写 `localStorage`，需时可自行接 UI）。
 - **成就**：本地解锁（`wbti.achievements.v1`），非排行榜、不表示科学性。
-- 详细实施说明见
-  [.cursor/plans/wbti_fun_engagement_full.plan.md](.cursor/plans/wbti_fun_engagement_full.plan.md)。
 
 ## Quick start
 
@@ -76,13 +74,33 @@ Open `index.html` in a static server (for example VS Code Live Server or
 ## Docs
 
 - [SPEC.md](SPEC.md) — product requirements
-- [AGENTS.md](AGENTS.md) — tooling and conventions for contributors/agents
-- [.cursor/plans/wbti_master_plan_ea475cdf.plan.md](.cursor/plans/wbti_master_plan_ea475cdf.plan.md)
-  — master delivery plan (workspace canonical)
-- [.cursor/plans/wbti_scoring_matrix_a1b2c3d4.plan.md](.cursor/plans/wbti_scoring_matrix_a1b2c3d4.plan.md)
-  — scoring axes, 8 results, tie-break
-- [.cursor/plans/wbti_fun_engagement_full.plan.md](.cursor/plans/wbti_fun_engagement_full.plan.md)
-  — shuffle, quips, themes, achievements, bank B (delivery reference)
+- [DEPLOY.md](DEPLOY.md) — release and Pages deployment flow
+- [SECURITY.md](SECURITY.md) — security policy and reporting process
+
+## Local secret hook
+
+Install project-local git hooks once:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Hook behavior:
+
+- `.githooks/pre-commit` runs `node scripts/precommitSecretScan.js`
+- scans staged text files for obvious secret patterns
+- blocks the commit when risky matches are found
+- supports narrow exceptions in `.secret-scan-allowlist.json`
+  (`filePath` + regex `rule` + required `reason`)
+- `.githooks/pre-push` runs `node scripts/prepushPublicGuard.js`
+  (blocks tracked `.cursor/`, blocks non-template `.env*`, runs `npm test`)
+
+Manual run:
+
+```bash
+npm run secrets:scan-staged
+npm run push:guard
+```
 
 ## Deploy (GitHub Pages)
 

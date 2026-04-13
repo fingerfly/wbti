@@ -2,16 +2,41 @@
 
 ## Unreleased
 
-（暂无）
+### Added
+
+- Security policy doc: [SECURITY.md](SECURITY.md) (reporting channel, response
+  SLAs, key rotation and history cleanup playbook).
+- CI secret scan workflow: `.github/workflows/security-scan.yml` (`gitleaks`
+  on push / pull_request / workflow_dispatch).
+- Local pre-commit secret guard: `.githooks/pre-commit` +
+  `scripts/precommitSecretScan.js`; manual check via
+  `npm run secrets:scan-staged`.
+- Secret-scan allowlist config: `.secret-scan-allowlist.json` with strict
+  `filePath` + regex `rule` + required `reason` entries.
+- Local push guard: `.githooks/pre-push` + `scripts/prepushPublicGuard.js`
+  now enforce no tracked `.cursor/`, no tracked non-template `.env*`, and
+  full `npm test` before push.
+- Hook runtime hardening: `.githooks/pre-commit` and `.githooks/pre-push`
+  now run as Node scripts (no shell wrapper dependency).
+- Regression guard: `tests/unit/gitHooksRuntime.test.js` verifies both
+  `.githooks` launchers keep the Node shebang.
+
+### Changed
+
+- Public docs hygiene: `README.md`, `DEPLOY.md`, and `deploy.env.example` now
+  use generic placeholders for deploy repo and Pages URL.
+- Deploy hardening: `scripts/deployGitOps.js` no longer passes `--no-verify`
+  to `git commit`; local hooks remain active.
+- Internal planning metadata is now kept local (`.cursor/` ignored from git).
+- Public README no longer links internal `.cursor/plans/*` artifacts.
 
 ## 0.2.2 — 2026-04-13
 
 ### Added
 
-- **公开仓库**：[fingerfly/wbti](https://github.com/fingerfly/wbti) 首次通过
-  `npm run release:patch` 推送至 `main`。
+- **公开仓库**：首次通过 `npm run release:patch` 推送至 `main`。
 - **线上演示（GitHub Pages）**：启用 Actions Pages 后一般为  
-  **https://fingerfly.github.io/wbti/**
+  **https://<owner>.github.io/<repo>/**
 - **`.env.deploy`**：可选本地加载 `WBTI_DEPLOY_REMOTE`（见
   [deploy.env.example](deploy.env.example)）；[`scripts/deployEnv.js`](scripts/deployEnv.js)。
 - **跨平台发布（Goja/HLM 式）**：[`scripts/deploy.js`](scripts/deploy.js)、
@@ -24,7 +49,8 @@
 ### Changed
 
 - **许可声明**：项目许可证设为 `UNLICENSED`（No License）。
-- **Pages 验证**：`https://fingerfly.github.io/wbti/` 已可访问，Actions `Deploy to GitHub Pages` 成功。
+- **Pages 验证**：`https://<owner>.github.io/<repo>/` 可访问时，表示 `Deploy to GitHub Pages`
+  已成功。
 - **quizView 拆分**：`quizViewQuestion` / `quizViewResult` / `quizViewScreens` /
   `quizViewOptions` / `quizViewComplete`；配套单元测。
 - **部署策略**：公开库由 **`npm run release:*`** 推送（无 bash/PowerShell 镜像脚本）。
