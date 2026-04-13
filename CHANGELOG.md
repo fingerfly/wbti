@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.2.3 — 2026-04-13
+
 ### Added
 
 - Security policy doc: [SECURITY.md](SECURITY.md) (reporting channel, response
@@ -28,6 +30,8 @@
 - Deploy hardening: `scripts/deployGitOps.js` no longer passes `--no-verify`
   to `git commit`; local hooks remain active.
 - Internal planning metadata is now kept local (`.cursor/` ignored from git).
+- `AGENTS.md` is treated as internal-only guidance and excluded from the public
+  repository surface.
 - Public README no longer links internal `.cursor/plans/*` artifacts.
 
 ## 0.2.2 — 2026-04-13
