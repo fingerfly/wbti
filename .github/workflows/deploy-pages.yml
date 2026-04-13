@@ -7,6 +7,9 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'favicon.ico'
+      - 'favicon.svg'
+      - 'apple-touch-icon.png'
       - 'css/**'
       - 'js/**'
       - 'data/**'
@@ -36,6 +39,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/
+          cp favicon.ico favicon.svg apple-touch-icon.png _site/
           cp -r css js data profiles _site/
           touch _site/.nojekyll
 
