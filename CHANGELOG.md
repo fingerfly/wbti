@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## 0.3.0 — 2026-04-13
+
+### Changed
+
+- Favicon set redesigned for stronger WBTI personality-test branding with a
+  playful, humorous style: updated `favicon.svg`, `favicon.ico`, and
+  `apple-touch-icon.png`.
+- Icon concept now emphasizes quiz identity and memorability via a colorful
+  speech bubble, bold `WBTI` lettering, a wink-smile face, and a `?` badge.
+- `index.html` head metadata now references the full icon trio
+  (`favicon.ico`, `favicon.svg`, `apple-touch-icon.png`) for modern and
+  legacy browser/device coverage.
+
 ## 0.2.6 — 2026-04-13
 
 ### Changed
