@@ -25,6 +25,14 @@ export const DEPLOY_EXCLUDE = new Set([
   'AGENTS.md',
 ]);
 
+/** @type {ReadonlySet<string>} */
+const DEPLOY_KEEP_TARGET = new Set([
+  '.git',
+  'node_modules',
+  'playwright-report',
+  'test-results',
+]);
+
 /**
  * @param {string} name
  * @returns {boolean}
@@ -33,6 +41,14 @@ export function shouldDeployExclude(name) {
   if (DEPLOY_EXCLUDE.has(name)) return true;
   if (name.startsWith('.env')) return true;
   return false;
+}
+
+/**
+ * @param {string} name
+ * @returns {boolean}
+ */
+function shouldKeepTargetEntry(name) {
+  return DEPLOY_KEEP_TARGET.has(name);
 }
 
 /**
@@ -101,7 +117,7 @@ export function syncDeployTree(sourceDir, targetDir) {
   if (!existsSync(targetDir)) return;
   const existing = readdirSync(targetDir, { withFileTypes: true });
   for (const entry of existing) {
-    if (shouldDeployExclude(entry.name)) continue;
+    if (shouldKeepTargetEntry(entry.name)) continue;
     if (copied.has(entry.name)) continue;
     rmSync(join(targetDir, entry.name), { recursive: true, force: true });
   }

@@ -3,11 +3,15 @@
  */
 // @vitest-environment node
 import { describe, it, expect } from 'vitest';
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 import {
   bumpSemverString,
   normalizeRemoteRepo,
   parseSemver,
   shouldDeployExclude,
+  syncDeployTree,
 } from '../../scripts/deployLib.js';
 
 describe('normalizeRemoteRepo', () => {
@@ -54,5 +58,23 @@ describe('shouldDeployExclude', () => {
     expect(shouldDeployExclude('AGENTS.md')).toBe(true);
     expect(shouldDeployExclude('.env.deploy')).toBe(true);
     expect(shouldDeployExclude('README.md')).toBe(false);
+  });
+});
+
+describe('syncDeployTree', () => {
+  it('purges internal-only files from deploy target', () => {
+    const root = mkdtempSync(join(tmpdir(), 'wbti-deploylib-'));
+    const src = join(root, 'src');
+    const dst = join(root, 'dst');
+    mkdirSync(src, { recursive: true });
+    mkdirSync(dst, { recursive: true });
+    writeFileSync(join(src, 'README.md'), '# ok\n', 'utf8');
+    writeFileSync(join(dst, 'AGENTS.md'), 'internal only\n', 'utf8');
+    writeFileSync(join(dst, '.env.deploy'), 'SECRET=x\n', 'utf8');
+    syncDeployTree(src, dst);
+    expect(existsSync(join(dst, 'README.md'))).toBe(true);
+    expect(existsSync(join(dst, 'AGENTS.md'))).toBe(false);
+    expect(existsSync(join(dst, '.env.deploy'))).toBe(false);
+    rmSync(root, { recursive: true, force: true });
   });
 });
