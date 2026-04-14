@@ -4,24 +4,39 @@
 
 ### Added
 
+- **Single source of truth for version + build**（2026-04-14）：
+  - [`package.json`](package.json)：`version`（semver）与 **`wbtiBuild`**
+    （HLM 式 build 号）。
+  - [`js/appVersion.js`](js/appVersion.js) 由脚本生成，勿手改；运行
+    `npm run generate:app-version`。
+  - [`scripts/appVersionGenerate.js`](scripts/appVersionGenerate.js) /
+    [`scripts/generateAppVersion.js`](scripts/generateAppVersion.js)：从
+    `package.json` 写出 `appVersion.js`。
+  - [`scripts/assertAppVersionSync.js`](scripts/assertAppVersionSync.js)：
+    校验磁盘上的 `appVersion.js` 与 `package.json` 一致；`pretest`、
+    `test:unit`、`test:e2e` 会执行（CI `test:unit` 已覆盖）。
 - **HLM-style build metadata**（与 HLM 同款语义）：
   - [`js/appVersion.js`](js/appVersion.js)：`APP_VERSION`、`APP_BUILD`、
     `getDisplayVersion()`（页脚文案 `v… (build N)`）。
-  - [`scripts/appVersionDeploy.js`](scripts/appVersionDeploy.js)：解析 /
-    改写 `appVersion.js`，计算下一发布状态（`build` 仅加 build 号；
-    `patch|minor|major` 升 semver 且 **APP_BUILD** 置 **1**）。
+  - [`scripts/appVersionDeploy.js`](scripts/appVersionDeploy.js)：读写
+    `package.json` 发布态、解析生成后的 `appVersion.js`、计算下一发布状态
+    （`build` 仅加 **`wbtiBuild`**；`patch|minor|major` 升 semver 且
+    **`wbtiBuild`** 置 **1**）。
   - [`scripts/deployReleaseBump.js`](scripts/deployReleaseBump.js)：发布前
-    写入 `js/appVersion.js`；semver 发布时同步
-    [`package.json`](package.json) 的 `version`。
+    写回 `package.json` 并 **重新生成** `js/appVersion.js`。
   - [`scripts/deploy.js`](scripts/deploy.js)：每次 `npm run release:*` 在
-    通过测试后调用上述逻辑；**APP_VERSION** 必须与 **package.json**
-    **version** 一致，否则报错退出。
+    通过测试后调用上述逻辑。
   - 页脚：[`index.html`](index.html) 增加 `#app-version`，[`js/app.js`](js/app.js)
     挂载 `getDisplayVersion()`，[`css/style.css`](css/style.css) 增加
     `.app-version` 样式。
 
 ### Changed
 
+- **Dev tooling / CI**（2026-04-14）：[`package.json`](package.json) 升级
+  **`@playwright/test`**、**`jsdom`**、**`vitest`**；增加 **`overrides`**
+  **`follow-redirects`** 以清除 `npm audit` 报告；[`.github/workflows/test.yml`](.github/workflows/test.yml)
+  在存在 `package-lock.json` 时用 **`npm ci`**，否则 **`npm install`**，并将
+  npm 缓存键改为 **`package.json`**（适配 monorepo 未提交 lock 的开发树）。
 - 文档与发布说明：[`DEPLOY.md`](DEPLOY.md)、[`README.md`](README.md)、
   [`AGENTS.md`](AGENTS.md) 补充 `appVersion.js`、`release:build` 与版本对齐
   约定；子计划

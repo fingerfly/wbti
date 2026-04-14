@@ -1,16 +1,20 @@
 {
   "name": "wbti",
-  "version": "0.3.1",
+  "version": "0.3.2",
+  "wbtiBuild": 1,
   "description": "牛马人格测验（WBTI）— light workplace humor quiz (entertainment only)",
   "type": "module",
   "private": true,
   "scripts": {
+    "generate:app-version": "node scripts/generateAppVersion.js",
+    "assert:app-version": "node scripts/assertAppVersionSync.js",
+    "pretest": "npm run assert:app-version",
     "test": "vitest run && npm run test:e2e",
-    "test:unit": "vitest run",
-    "test:watch": "vitest watch",
+    "test:unit": "npm run assert:app-version && vitest run",
+    "test:watch": "npm run assert:app-version && vitest watch",
     "secrets:scan-staged": "node scripts/precommitSecretScan.js",
     "push:guard": "node scripts/prepushPublicGuard.js",
-    "test:e2e": "node -e \"const os=require('node:os'); const path=require('node:path'); const {spawnSync}=require('node:child_process'); const defaultPath=process.platform==='win32'?path.join(os.homedir(),'AppData','Local','ms-playwright'):process.platform==='darwin'?path.join(os.homedir(),'Library','Caches','ms-playwright'):path.join(os.homedir(),'.cache','ms-playwright'); const env={...process.env, PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH || defaultPath}; const cli=path.join(process.cwd(),'node_modules','@playwright','test','cli.js'); const r=spawnSync(process.execPath,[cli,'test'],{stdio:'inherit',env}); process.exit(r.status===null?1:r.status);\"",
+    "test:e2e": "npm run assert:app-version && node -e \"const os=require('node:os'); const path=require('node:path'); const {spawnSync}=require('node:child_process'); const defaultPath=process.platform==='win32'?path.join(os.homedir(),'AppData','Local','ms-playwright'):process.platform==='darwin'?path.join(os.homedir(),'Library','Caches','ms-playwright'):path.join(os.homedir(),'.cache','ms-playwright'); const env={...process.env, PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH || defaultPath}; const cli=path.join(process.cwd(),'node_modules','@playwright','test','cli.js'); const r=spawnSync(process.execPath,[cli,'test'],{stdio:'inherit',env}); process.exit(r.status===null?1:r.status);\"",
     "deploy": "node scripts/deploy.js",
     "release:build": "node scripts/deploy.js build --confirm",
     "release:patch": "node scripts/deploy.js patch --confirm",
@@ -23,10 +27,13 @@
     "workplace"
   ],
   "license": "UNLICENSED",
+  "overrides": {
+    "follow-redirects": "^1.16.0"
+  },
   "devDependencies": {
-    "@playwright/test": "^1.49.1",
+    "@playwright/test": "^1.59.1",
     "http-server": "^14.1.1",
-    "jsdom": "^25.0.1",
-    "vitest": "^3.0.5"
+    "jsdom": "^29.0.2",
+    "vitest": "^4.1.4"
   }
 }

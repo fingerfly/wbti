@@ -3,8 +3,8 @@
  * Purpose: Cross-platform WBTI release — tests, semver bump, push public mirror.
  * Description:
  *   - Same idea as Goja / HLM `deploy.js`: Node + git only.
- *   - Updates js/appVersion.js (APP_VERSION + APP_BUILD); semver bumps also
- *     write package.json. Set `WBTI_DEPLOY_REMOTE`; optional deploy dir/env.
+ *   - Bumps package.json (version + wbtiBuild) and regenerates
+ *     js/appVersion.js. Set `WBTI_DEPLOY_REMOTE`; optional deploy dir/env.
  */
 import { spawnSync } from 'node:child_process';
 import { join, resolve } from 'node:path';

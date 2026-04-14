@@ -1,12 +1,12 @@
 /**
  * Purpose: Expose WBTI semver + build for UI and release tooling.
  * Description:
- *   - APP_VERSION mirrors package.json; keep in sync on semver releases.
- *   - APP_BUILD increments on `npm run release:build`; resets to 1 on
- *     patch/minor/major (see scripts/deploy.js).
+ *   - **Generated** from package.json (version + wbtiBuild). Do not edit
+ *     by hand; run `npm run generate:app-version`.
+ *   - APP_BUILD is HLM-style; increments on `npm run release:build`.
  */
 
-export const APP_VERSION = "0.3.1";
+export const APP_VERSION = "0.3.2";
 export const APP_BUILD = 1;
 
 /**

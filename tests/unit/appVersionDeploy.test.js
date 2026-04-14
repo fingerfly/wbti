@@ -9,8 +9,9 @@ import { tmpdir } from 'node:os';
 import {
   nextAppReleaseState,
   parseAppVersionState,
+  readPackageReleaseState,
   updateAppVersionSource,
-  writePackageJsonVersion,
+  writePackageReleaseState,
 } from '../../scripts/appVersionDeploy.js';
 
 const SAMPLE = `export const APP_VERSION = "0.3.0";
@@ -63,17 +64,59 @@ describe('nextAppReleaseState', () => {
   });
 });
 
-describe('writePackageJsonVersion', () => {
-  it('writes version field only', () => {
+describe('readPackageReleaseState', () => {
+  it('reads version and wbtiBuild', () => {
+    const root = mkdtempSync(join(tmpdir(), 'wbti-pkg-'));
+    writeFileSync(
+      join(root, 'package.json'),
+      `${JSON.stringify(
+        { name: 'x', version: '0.1.0', wbtiBuild: 4 },
+        null,
+        2,
+      )}\n`,
+      'utf8',
+    );
+    expect(readPackageReleaseState(root)).toEqual({
+      appVersion: '0.1.0',
+      appBuild: 4,
+    });
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it('defaults wbtiBuild to 1 when absent', () => {
     const root = mkdtempSync(join(tmpdir(), 'wbti-pkg-'));
     writeFileSync(
       join(root, 'package.json'),
       `${JSON.stringify({ name: 'x', version: '0.1.0' }, null, 2)}\n`,
       'utf8',
     );
-    writePackageJsonVersion(root, '0.2.0');
+    expect(readPackageReleaseState(root)).toEqual({
+      appVersion: '0.1.0',
+      appBuild: 1,
+    });
+    rmSync(root, { recursive: true, force: true });
+  });
+});
+
+describe('writePackageReleaseState', () => {
+  it('writes version and wbtiBuild', () => {
+    const root = mkdtempSync(join(tmpdir(), 'wbti-pkg-'));
+    writeFileSync(
+      join(root, 'package.json'),
+      `${JSON.stringify(
+        { name: 'x', version: '0.1.0', wbtiBuild: 2 },
+        null,
+        2,
+      )}\n`,
+      'utf8',
+    );
+    writePackageReleaseState(root, {
+      appVersion: '0.2.0',
+      appBuild: 5,
+    });
     const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
     expect(pkg.version).toBe('0.2.0');
+    expect(pkg.wbtiBuild).toBe(5);
     expect(pkg.name).toBe('x');
     rmSync(root, { recursive: true, force: true });
   });

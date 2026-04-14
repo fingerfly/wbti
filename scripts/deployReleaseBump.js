@@ -1,29 +1,17 @@
 /**
- * Purpose: Apply HLM-style APP_VERSION / APP_BUILD file updates for release.
+ * Purpose: Apply HLM-style release bumps; package.json is source of truth.
  * Description:
- *   - Requires js/appVersion.js; enforces APP_VERSION === package.json
- *     version before bumping.
+ *   - Reads version + wbtiBuild from package.json; writes next state back;
+ *     regenerates js/appVersion.js.
  */
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import {
-  appVersionFilePath,
   nextAppReleaseState,
-  parseAppVersionState,
-  updateAppVersionSource,
-  writePackageJsonVersion,
+  readPackageReleaseState,
+  writePackageReleaseState,
 } from './appVersionDeploy.js';
-
-/**
- * @param {string} projectRoot
- * @returns {string}
- */
-function readPackageVersion(projectRoot) {
-  const pkg = JSON.parse(
-    readFileSync(join(projectRoot, 'package.json'), 'utf8'),
-  );
-  return String(pkg.version);
-}
+import { writeGeneratedAppVersion } from './appVersionGenerate.js';
 
 /**
  * Bump app version files; return release label for git commit message.
@@ -33,23 +21,14 @@ function readPackageVersion(projectRoot) {
  * @returns {string} e.g. v0.3.0 (build 2)
  */
 export function bumpAppReleaseFiles(projectRoot, bumpType) {
-  const avPath = appVersionFilePath(projectRoot);
-  if (!existsSync(avPath)) {
-    throw new Error('Missing js/appVersion.js (required for release labels).');
+  const pkgPath = join(projectRoot, 'package.json');
+  if (!existsSync(pkgPath)) {
+    throw new Error('Missing package.json (required for release labels).');
   }
-  const appSource = readFileSync(avPath, 'utf8');
-  const fromFile = parseAppVersionState(appSource);
-  const pkgVer = readPackageVersion(projectRoot);
-  if (fromFile.appVersion !== pkgVer) {
-    throw new Error(
-      `APP_VERSION (${fromFile.appVersion}) must match package.json (${pkgVer}).`,
-    );
-  }
-  const next = nextAppReleaseState(fromFile, bumpType);
-  const updated = updateAppVersionSource(appSource, next);
-  writeFileSync(avPath, updated, 'utf8');
-  if (bumpType !== 'build') {
-    writePackageJsonVersion(projectRoot, next.appVersion);
-  }
+  const current = readPackageReleaseState(projectRoot);
+  const next = nextAppReleaseState(current, bumpType);
+  writePackageReleaseState(projectRoot, next);
+  mkdirSync(join(projectRoot, 'js'), { recursive: true });
+  writeGeneratedAppVersion(projectRoot, next);
   return `v${next.appVersion} (build ${next.appBuild})`;
 }

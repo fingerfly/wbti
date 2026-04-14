@@ -1,7 +1,8 @@
 /**
- * Purpose: HLM-style APP_VERSION / APP_BUILD helpers for WBTI deploy.
+ * Purpose: HLM-style release state for WBTI (semver + build).
  * Description:
- *   - Parse/rewrite js/appVersion.js (regex-stable shape).
+ *   - Semver + build live in package.json (version, wbtiBuild).
+ *   - Parse/rewrite js/appVersion.js for tests and drift checks (regex shape).
  *   - Compute next state; reuse bumpSemverString for semver bumps.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -9,6 +10,43 @@ import { join } from 'node:path';
 import { bumpSemverString } from './deployLib.js';
 
 const VALID = new Set(['build', 'patch', 'minor', 'major']);
+
+/** @type {string} Custom package.json field for HLM-style build counter. */
+export const WBTI_BUILD_FIELD = 'wbtiBuild';
+
+/**
+ * @param {string} projectRoot
+ * @returns {{ appVersion: string, appBuild: number }}
+ */
+export function readPackageReleaseState(projectRoot) {
+  const p = join(projectRoot, 'package.json');
+  const pkg = JSON.parse(readFileSync(p, 'utf8'));
+  const appVersion = String(pkg.version ?? '').trim();
+  if (!appVersion) throw new Error('package.json missing version');
+  let raw = pkg[WBTI_BUILD_FIELD];
+  if (raw === undefined || raw === null) {
+    return { appVersion, appBuild: 1 };
+  }
+  const appBuild = Number.parseInt(String(raw), 10);
+  if (!Number.isInteger(appBuild) || appBuild < 1) {
+    throw new RangeError(
+      `package.json ${WBTI_BUILD_FIELD} must be a positive integer`,
+    );
+  }
+  return { appVersion, appBuild };
+}
+
+/**
+ * @param {string} projectRoot
+ * @param {{ appVersion: string, appBuild: number }} next
+ */
+export function writePackageReleaseState(projectRoot, next) {
+  const p = join(projectRoot, 'package.json');
+  const pkg = JSON.parse(readFileSync(p, 'utf8'));
+  pkg.version = next.appVersion;
+  pkg[WBTI_BUILD_FIELD] = next.appBuild;
+  writeFileSync(p, `${JSON.stringify(pkg, null, 2)}\n`, 'utf8');
+}
 
 /**
  * @param {string} source - Full appVersion.js file text.
@@ -67,15 +105,4 @@ export function nextAppReleaseState(current, mode) {
  */
 export function appVersionFilePath(projectRoot) {
   return join(projectRoot, 'js', 'appVersion.js');
-}
-
-/**
- * @param {string} projectRoot
- * @param {string} version - Strict x.y.z semver.
- */
-export function writePackageJsonVersion(projectRoot, version) {
-  const p = join(projectRoot, 'package.json');
-  const pkg = JSON.parse(readFileSync(p, 'utf8'));
-  pkg.version = version;
-  writeFileSync(p, `${JSON.stringify(pkg, null, 2)}\n`, 'utf8');
 }

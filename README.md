@@ -112,10 +112,15 @@ PowerShell 镜像脚本。设置 **`WBTI_DEPLOY_REMOTE`**（或将 [deploy.env.e
 npm run release:patch   # 或 :minor :major :build（均含 --confirm）
 ```
 
-脚本会跑 **`npm test`**、更新 [`js/appVersion.js`](js/appVersion.js)（**APP_VERSION**
-与 **APP_BUILD**，HLM 同款语义）、按需提升 `package.json` 的 `version`（`release:build`
-仅递增 build）、将工作区同步到临时 clone 并 `git push` 到你的**公开 GitHub 仓库**
-（`main`）。详见 [DEPLOY.md](DEPLOY.md)。
+脚本会跑 **`npm test`**、更新 [`package.json`](package.json)（**`version`** 与
+**`wbtiBuild`**）并 **重新生成** [`js/appVersion.js`](js/appVersion.js)（页脚仍用
+**APP_VERSION** / **APP_BUILD**，HLM 同款语义）、将工作区同步到临时 clone 并
+`git push` 到你的**公开 GitHub 仓库**（`main`）。
+
+若**不用** `release:*` 而手改了 `package.json` 的 **`version`** 或 **`wbtiBuild`**，
+请运行 **`npm run generate:app-version`** 以刷新 [`js/appVersion.js`](js/appVersion.js)。
+也可直接跑 **`npm test`**：若未生成，`assert:app-version` 会失败并提示先生成。
+详见 [DEPLOY.md](DEPLOY.md)。
 
 CI 与 Pages **只使用**本目录 [`.github/workflows/`](.github/workflows/)
 （`deploy-pages.yml`、`test.yml`）。`deploy-pages.yml` 将 `index.html`、`css/`、`js/`、
@@ -132,7 +137,9 @@ release:*`，目标仓库根即本应用树。
 is the Git repository root** (after mirror). No separate monorepo-root workflow
 is maintained for WBTI. If this folder lives inside a larger monorepo **without**
 mirroring, add a repository-root workflow that sets `working-directory` to this
-path and the same `npm ci` / test commands.
+path and the same install + test commands. The bundled workflow uses **`npm ci`**
+when **`package-lock.json`** exists, otherwise **`npm install`** (monorepo trees
+often omit the lockfile).
 
 ## License
 
