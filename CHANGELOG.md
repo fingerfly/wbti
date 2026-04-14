@@ -2,6 +2,41 @@
 
 ## Unreleased
 
+### Added
+
+- **HLM-style build metadata**（与 HLM 同款语义）：
+  - [`js/appVersion.js`](js/appVersion.js)：`APP_VERSION`、`APP_BUILD`、
+    `getDisplayVersion()`（页脚文案 `v… (build N)`）。
+  - [`scripts/appVersionDeploy.js`](scripts/appVersionDeploy.js)：解析 /
+    改写 `appVersion.js`，计算下一发布状态（`build` 仅加 build 号；
+    `patch|minor|major` 升 semver 且 **APP_BUILD** 置 **1**）。
+  - [`scripts/deployReleaseBump.js`](scripts/deployReleaseBump.js)：发布前
+    写入 `js/appVersion.js`；semver 发布时同步
+    [`package.json`](package.json) 的 `version`。
+  - [`scripts/deploy.js`](scripts/deploy.js)：每次 `npm run release:*` 在
+    通过测试后调用上述逻辑；**APP_VERSION** 必须与 **package.json**
+    **version** 一致，否则报错退出。
+  - 页脚：[`index.html`](index.html) 增加 `#app-version`，[`js/app.js`](js/app.js)
+    挂载 `getDisplayVersion()`，[`css/style.css`](css/style.css) 增加
+    `.app-version` 样式。
+
+### Changed
+
+- 文档与发布说明：[`DEPLOY.md`](DEPLOY.md)、[`README.md`](README.md)、
+  [`AGENTS.md`](AGENTS.md) 补充 `appVersion.js`、`release:build` 与版本对齐
+  约定；子计划
+  [`.cursor/plans/wbti_github_pages_mirror.plan.md`](.cursor/plans/wbti_github_pages_mirror.plan.md)、
+  [`.cursor/plans/wbti_master_plan_ea475cdf.plan.md`](.cursor/plans/wbti_master_plan_ea475cdf.plan.md)
+  同步。
+
+### Tests
+
+- 单元测试：[`tests/unit/appVersion.test.js`](tests/unit/appVersion.test.js)、
+  [`tests/unit/appVersionDeploy.test.js`](tests/unit/appVersionDeploy.test.js)、
+  [`tests/unit/deployReleaseBump.test.js`](tests/unit/deployReleaseBump.test.js)。
+- E2E：[`tests/e2e/wbti.spec.js`](tests/e2e/wbti.spec.js) 断言页脚版本格式
+  `v\d+.\d+.\d+ (build \d+)`。
+
 ## 0.3.0 — 2026-04-13
 
 ### Changed

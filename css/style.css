@@ -55,6 +55,12 @@ body {
   font-size: 0.85rem;
 }
 
+.app-version {
+  margin: 0.35rem 0 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
 .logo {
   margin: 0;
   font-weight: 700;

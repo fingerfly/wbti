@@ -112,8 +112,10 @@ PowerShell 镜像脚本。设置 **`WBTI_DEPLOY_REMOTE`**（或将 [deploy.env.e
 npm run release:patch   # 或 :minor :major :build（均含 --confirm）
 ```
 
-脚本会跑 **`npm test`**、按需提升 `package.json` 版本、将工作区同步到临时 clone 并
-`git push` 到你的**公开 GitHub 仓库**（`main`）。详见 [DEPLOY.md](DEPLOY.md)。
+脚本会跑 **`npm test`**、更新 [`js/appVersion.js`](js/appVersion.js)（**APP_VERSION**
+与 **APP_BUILD**，HLM 同款语义）、按需提升 `package.json` 的 `version`（`release:build`
+仅递增 build）、将工作区同步到临时 clone 并 `git push` 到你的**公开 GitHub 仓库**
+（`main`）。详见 [DEPLOY.md](DEPLOY.md)。
 
 CI 与 Pages **只使用**本目录 [`.github/workflows/`](.github/workflows/)
 （`deploy-pages.yml`、`test.yml`）。`deploy-pages.yml` 将 `index.html`、`css/`、`js/`、

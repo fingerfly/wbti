@@ -3,18 +3,18 @@
  * Purpose: Cross-platform WBTI release — tests, semver bump, push public mirror.
  * Description:
  *   - Same idea as Goja / HLM `deploy.js`: Node + git only.
- *   - Set `WBTI_DEPLOY_REMOTE`. Optional `WBTI_DEPLOY_DIR`, identity env vars.
+ *   - Updates js/appVersion.js (APP_VERSION + APP_BUILD); semver bumps also
+ *     write package.json. Set `WBTI_DEPLOY_REMOTE`; optional deploy dir/env.
  */
 import { spawnSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import {
-  bumpPackageJsonVersion,
   normalizeRemoteRepo,
   syncDeployTree,
 } from './deployLib.js';
+import { bumpAppReleaseFiles } from './deployReleaseBump.js';
 import {
   commitAllWithAuthor,
   ensureDeployCheckout,
@@ -59,13 +59,6 @@ function resolveDeployDir() {
   return join(tmpdir(), 'wbti-deploy');
 }
 
-function readPackageVersion() {
-  const pkg = JSON.parse(
-    readFileSync(join(projectRoot, 'package.json'), 'utf8'),
-  );
-  return String(pkg.version);
-}
-
 /**
  * @param {string} bumpType
  */
@@ -74,12 +67,7 @@ export function runDeploy(bumpType) {
   preflightGitRemote(url);
   runTestsOrExit();
 
-  let versionLabel;
-  if (bumpType === 'build') {
-    versionLabel = `v${readPackageVersion()}`;
-  } else {
-    versionLabel = `v${bumpPackageJsonVersion(projectRoot, bumpType)}`;
-  }
+  const versionLabel = bumpAppReleaseFiles(projectRoot, bumpType);
 
   const deployDir = resolveDeployDir();
   ensureDeployCheckout(deployDir, url, expectedRepo);

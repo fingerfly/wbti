@@ -1,7 +1,9 @@
 # 牛马格测验 — GitHub 公开仓库与 Pages
 
 **策略**（对齐 Goja / HLM）：在 **`wbti/` 目录**内用 **Node** 发布——`npm run
-release:*`，由 [`scripts/deploy.js`](scripts/deploy.js) 跑测试、可选 semver 提升、
+release:*`，由 [`scripts/deploy.js`](scripts/deploy.js) 跑测试、更新
+[`js/appVersion.js`](js/appVersion.js)（HLM 式 **APP_VERSION** + **APP_BUILD**）、
+可选 semver 提升 `package.json`、
 同步到临时 clone 并 **`git push`** 到你在 GitHub 上的**独立公开仓库**。不要用
 shell 脚本做 subtree；跨平台只依赖 **Node + git**。
 
@@ -29,10 +31,13 @@ shell 脚本做 subtree；跨平台只依赖 **Node + git**。
 
 | 命令 | 行为 |
 |------|------|
-| `npm run release:build` | 不修改 `package.json` 版本；跑全量测试后同步并推送 |
-| `npm run release:patch` | patch +1 → 测试 → 同步 → 推送 |
-| `npm run release:minor` | minor 提升 |
-| `npm run release:major` | major 提升 |
+| `npm run release:build` | **仅** `APP_BUILD + 1`；不改 `package.json`；测试后推送 |
+| `npm run release:patch` | semver patch +1、`APP_BUILD` 置 **1**；写回 `package.json` 与 `js/appVersion.js` |
+| `npm run release:minor` | minor +1，**build** 置 1 |
+| `npm run release:major` | major +1，**build** 置 1 |
+
+发布前 **`APP_VERSION` 必须与 `package.json` 的 `version` 一致**；否则脚本报错退出。
+页脚展示 `v… (build N)` 来自 `js/appVersion.js`（见 [`js/appVersion.js`](js/appVersion.js)）。
 
 脚本内含 **`--confirm`**，避免误触（与 HLM `release:patch` 等一致）。
 

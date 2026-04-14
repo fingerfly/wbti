@@ -5,6 +5,9 @@ import { test, expect } from '@playwright/test';
 
 test('completes quiz and shows result title', async ({ page }) => {
   await page.goto('/');
+  await expect(page.locator('#app-version')).toHaveText(
+    /v\d+\.\d+\.\d+ \(build \d+\)/,
+  );
   await expect(
     page.getByRole('heading', { name: /测测你的.*牛马.*格/ }),
   ).toBeVisible();

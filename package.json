@@ -1,6 +1,6 @@
 {
   "name": "wbti",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "牛马人格测验（WBTI）— light workplace humor quiz (entertainment only)",
   "type": "module",
   "private": true,

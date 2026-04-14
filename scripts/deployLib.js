@@ -124,6 +124,9 @@ export function syncDeployTree(sourceDir, targetDir) {
 }
 
 /**
+ * Bump `package.json` `version` only (no `js/appVersion.js`). Release flow
+ * uses `appVersionDeploy.js` + this helper’s semver rules via deploy.js.
+ *
  * @param {string} projectRoot
  * @param {string} bumpType
  * @returns {string} new version

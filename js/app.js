@@ -4,9 +4,10 @@
  */
 import { applyThemeToRoot } from './themeApply.js';
 import { createQuizView } from './quizView.js';
+import { getDisplayVersion } from './appVersion.js';
+import { buildShareText } from './shareText.js';
 
 applyThemeToRoot();
-import { buildShareText } from './shareText.js';
 
 const els = {
   welcome: document.getElementById('screen-welcome'),
@@ -31,6 +32,8 @@ const els = {
 };
 
 const shareStatus = document.getElementById('share-status');
+const appVersionLine = document.getElementById('app-version');
+if (appVersionLine) appVersionLine.textContent = getDisplayVersion();
 
 const view = createQuizView(els, {});
 
